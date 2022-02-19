@@ -16,13 +16,15 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/Logout";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import WestIcon from "@mui/icons-material/West";
+import DataItem from "./views/pages/Data";
+import { useParams, useNavigate, Outlet } from "react-router-dom";
 const drawerWidth = 240;
 const App = () => {
   const [open, setOpen] = React.useState(false);
   const [openColor, setOpenColor] = React.useState("");
+  const [data, setData] = React.useState(DataItem);
+  const navigate = useNavigate();
   return (
     <div>
       <CssBaseline />
@@ -67,65 +69,15 @@ const App = () => {
             style={{ dispaly: "flex", width: open ? drawerWidth : null }}
             sx={{ mt: 2 }}
           >
-            <ListItem
-              button
-              sx={{ "&.hover": openColor === "one" ? "green" : null }}
-              onClick={() => setOpenColor("one")}
-            >
-              <ListItemText primary="Enregistement utilisateur "></ListItemText>
-              <ChevronRightIcon />
-            </ListItem>
-            <Divider />
-            <ListItem
-              button
-              sx={{ "&.hover": openColor === "two" ? "green" : null }}
-              onClick={() => setOpenColor("two")}
-            >
-              <ListItemText primary="Enregistement des data  "></ListItemText>
-              <ChevronRightIcon />
-            </ListItem>
-            <Divider />
-            <ListItem
-              button
-              sx={{ "&.hover": openColor === "three" ? "green" : null }}
-              onClick={() => setOpenColor("three")}
-            >
-              <ListItemText primary="List three "></ListItemText>
-              <ChevronRightIcon />
-            </ListItem>
-            <Divider />
-          </List>
-          <List
-            style={{ dispaly: "flex", width: open ? drawerWidth : null }}
-            sx={{ mt: 2 }}
-          >
-            <ListItem
-              button
-              sx={{ "&.hover": openColor === "one" ? "green" : null }}
-              onClick={() => setOpenColor("one")}
-            >
-              <ListItemText primary="Enregistement utilisateur "></ListItemText>
-              <ChevronRightIcon />
-            </ListItem>
-            <Divider />
-            <ListItem
-              button
-              sx={{ "&.hover": openColor === "two" ? "green" : null }}
-              onClick={() => setOpenColor("two")}
-            >
-              <ListItemText primary="Enregistement des data  "></ListItemText>
-              <ChevronRightIcon />
-            </ListItem>
-            <Divider />
-            <ListItem
-              button
-              sx={{ "&.hover": openColor === "three" ? "green" : null }}
-              onClick={() => setOpenColor("three")}
-            >
-              <ListItemText primary="List three "></ListItemText>
-              <ChevronRightIcon />
-            </ListItem>
-            <Divider />
+            {data.map((item) => (
+              <ListItem
+                button
+                sx={{ "&.hover": openColor === "one" ? "green" : null }}
+                onClick={() => navigate(item.route)}
+              >
+                <ListItemText>{item.name}</ListItemText>
+              </ListItem>
+            ))}
           </List>
         </Drawer>
       </Box>
@@ -146,16 +98,8 @@ const App = () => {
           quisque non tellus. Convallis convallis tellus id interdum velit
           laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
         </Typography>
-        <Typography sx={{ ml: 5 }}>Title 2</Typography>
-        <Typography paragraph sx={{ ml: 5 }}>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-        </Typography>
       </Box>
+      <Outlet />
     </div>
   );
 };
